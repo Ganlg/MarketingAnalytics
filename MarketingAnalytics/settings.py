@@ -25,7 +25,7 @@ SECRET_KEY = 'b(-%&c$^gocj%d$98+40y#x+knh)@25=!a0%h1c=)vbhkbh761'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['marketinganalytics.pythonanywhere.com']
 
 
 # Application definition
