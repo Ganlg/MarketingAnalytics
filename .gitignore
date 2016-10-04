@@ -3,3 +3,13 @@ db.*
 templates/~*
 *.pyc
 *.pyo
+MarketingAnalytics/__pycache__/
+home/__pycache__/
+home/migrations/__pycache__/
+account/__pycache__/
+account/migrations/__pycache__/
+product/__pycache__/
+product/migrations/__pycache__/
+tools/__pycache__/
+tools/migrations/__pycache__/
+tools/templatetags/__pycache__/
