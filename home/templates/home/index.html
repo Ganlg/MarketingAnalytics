@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>
+  {% if request.session.lang == 'cn' %}
+    公司名字
+  {% else %}
+    Company
+  {% endif %}
+  </title>
+  {% include 'base-header.html' %}
+  <link type="text/css" rel="stylesheet" href="{% static 'home/css/index.css' %}">
+</head>
+    
+<body id="myPage">
+  {% if request.session.lang == 'cn' %}
+    {% include 'home/cn/index_cn.html' %}
+  {% else %}
+    {% include 'home/en/index_en.html' %}
+  {% endif %}
+  
+  
+  <script type="application/javascript" src="{% static 'home/js/index.js' %}"></script>
+</body>
+  
+  
+  
