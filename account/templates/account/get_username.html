@@ -1,0 +1,58 @@
+{% extends 'account/account.html' %}
+
+{% block title %}
+{% if request.session.lang == 'cn' %}
+找回用户名
+{% else %}
+Find Username
+{% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="container">
+  <div class="col-sm-6 col-sm-offset-3 dashboard">
+    
+    {% if request.session.lang == 'cn' %}
+    <div>
+      <h2 class="text-center">找回用户名</h2>
+      <h4>请输入您的注册邮箱</h4>
+      <form method="post" action=".">
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="email" class='form-control' placeholder="邮箱" name='email' required>
+        </div>
+        <div class='form-group text-right'>
+          <button type="submit" class="btn btn-primary">找回用户名</button>
+        </div>
+      </form>
+      <p>忘记密码 <a  href="{% url 'account:forget-password' %}">请点击这里</a></p>
+      <p><a href="{% url 'home:index' %}">返回首页</a></p>
+    </div>
+    {% else %}
+    <div>
+      <h2 class="text-center">Find Username</h2>
+      <h4>Please enter your email address</h4>
+      <form method="post" action="." >
+        {% csrf_token %}
+        <div class="form-group">
+          <input type="email" class='form-control' placeholder="Email" name='email' required>
+        </div>
+        <div class="form-group text-right">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+      <p>Forget password <a  href="{% url 'account:forget-password' %}">Click here</a></p>
+      <p><a href="{% url 'home:index' %}">Return to Home Page</a></p>
+    </div>
+
+    {% endif%}
+    
+  </div>
+</div>
+
+  
+{% endblock %}

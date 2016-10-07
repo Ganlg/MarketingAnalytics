@@ -1,0 +1,44 @@
+{% extends 'account/account.html' %}
+
+{% block title %}
+{% if request.session.lang == 'cn' %}
+邮箱验证
+{% else %}
+Email Verification
+{% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+
+{% load tool_tags %}
+
+<div class="container">
+    <div class="dashboard">
+    {% if request.session.lang == 'cn' %}
+      {% if success %}
+        <h4>您的邮箱已经验证成功！您可以登录使用我们提供的服务</h4>
+        <h4>感谢您成为我们尊贵的客户！</h4>
+      {% else %}
+        <h4>对不起，您的连接已经失效</h4>
+      {% endif %}
+      
+      <p><a href="{% url 'home:index'%}">返回主页</a></p>
+      <p><a href="{% url 'account:login' %}">登录</a></p>
+    
+    {% else %}
+      {% if success %}
+        <h4>You have successfully verified your email! You can now login to use our services</h4>
+        <h4>Thanks for being one of our valued customers!</h4>
+      {% else %}
+        <h4>Sorry the link has already expired</h4>
+      {% endif %}
+    <p><a href="{% url 'home:index'%}">Return to home page</a></p>
+    <p><a href="{% url 'account:login' %}">Login</a></p>
+    {% endif%}
+    </div>
+</div>
+
+  
+{% endblock %}

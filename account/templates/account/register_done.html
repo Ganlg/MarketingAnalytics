@@ -1,0 +1,41 @@
+{% extends 'account/account.html' %}
+
+{% block title %}
+{% if request.session.lang == 'cn' %}
+客户登录
+{% else %}
+Client Login
+{% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+
+{% load tool_tags %}
+
+<div class="container">
+    <div class="dashboard">
+    {% if request.session.lang == 'cn' %}
+    <h3>感谢您的注册 {{user}}!</h3><br>
+    <h4>您的帐号已经注册成功！您将会收到一封确认邮件。在验证完您的邮箱后，您就能登录使用我们提供的服务</h4>
+    
+    <h4>感谢您成为我们尊贵的客户！</h4>
+    <p>没有收到邮件? <a href="{% url 'account:send-activation' %}">请点击这里</a></p>
+    <p><a href="{% url 'home:index'%}">返回主页</a></p>
+    <p><a href="{% url 'account:login' %}">登录</a></p>
+    
+    {% else %}
+    <h3>Thanks {{user}}!</h3><br>
+    <h4>You have successfully registered! An email will be sent to you shortly. You will be able to login after verifing your email address.</h4>
+    
+    <h4>Thanks for being one of our valued customers!</h4>
+    <p>Not get the email? <a href="{% url 'account:send-activation' %}">Click here</a></p>
+    <p><a href="{% url 'home:index'%}">Return to home page</a></p>
+    <p><a href="{% url 'account:login' %}">Login</a></p>
+    {% endif%}
+    </div>
+</div>
+
+  
+{% endblock %}

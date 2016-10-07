@@ -1,0 +1,12 @@
+.dashboard{
+  background-color: #FFF;
+  padding: 2em;
+  border-radius: 10px;
+  
+}
+
+.dashboard a{
+  text-decoration: none;
+  cursor: pointer;
+}
+

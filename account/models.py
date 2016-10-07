@@ -14,6 +14,6 @@ class User(AbstractUser):
     service = models.ForeignKey(Service, null=True, blank=True)
     service_expire= models.DateTimeField('Service expire on', null=True, blank=True)
 
-    one_time_code = models.CharField(max_length=30, blank=True, null=True)
-    one_time_code_active_time = models.DateTimeField(null=True, blank=True)
+    activation_key = models.CharField(max_length=40, null=True)
+    key_expires = models.DateTimeField(null=True)
     email_verified = models.BooleanField(default=False)

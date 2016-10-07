@@ -1,0 +1,38 @@
+{% extends 'account/account.html' %}
+
+{% block title %}
+{% if request.session.lang == 'cn' %}
+邮箱验证
+{% else %}
+Email Verification
+{% endif %}
+{% endblock %}
+
+
+
+{% block content %}
+
+{% load tool_tags %}
+
+<div class="container">
+    <div class="dashboard">
+    {% if request.session.lang == 'cn' %}
+    <h3>您好 {{user}}!</h3><br>
+    <h4>您的邮箱还未进行验证，在验证完您的邮箱后，您才能登录使用我们提供的服务</h4>
+    
+    <p>没有收到邮件? <a href="{% url 'account:send-activation' %}">请点击这里</a></p>
+    <p><a href="{% url 'home:index'%}">返回主页</a></p>
+    <p><a href="{% url 'account:login' %}">登录</a></p>
+    
+    {% else %}
+    <h3>Hi {{user}}!</h3><br>
+    <h4>You have not verified your email. You will only be to login after verifing your email address.</h4>
+    <p>Not get the email? <a href="{% url 'account:send-activation' %}">Click here</a></p>
+    <p><a href="{% url 'home:index'%}">Return to home page</a></p>
+    <p><a href="{% url 'account:login' %}">Login</a></p>
+    {% endif%}
+    </div>
+</div>
+
+  
+{% endblock %}
