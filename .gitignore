@@ -13,3 +13,5 @@ product/migrations/__pycache__/
 tools/__pycache__/
 tools/migrations/__pycache__/
 tools/templatetags/__pycache__/
+
+mlmodels/data/

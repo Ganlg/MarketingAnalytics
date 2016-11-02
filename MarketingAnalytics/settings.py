@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'account',
     'product',
     'tools',
+    'demo',
 
 ]
 
