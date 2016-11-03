@@ -11,18 +11,36 @@
 //    }    }
 //});
 
+var get_color = d3.scaleLinear().domain([0, 100])
+      .interpolate(d3.interpolateHcl)
+      .range([d3.rgb("#db1c0a"), d3.rgb('#33cc33')]);
+
 var sentiment_chart = create_sentiment_chart();
+
+$('#sentiment-text input').keydown(function (event) {
+  var keyCode = (event.keyCode ? event.keyCode : event.which);
+  if(keyCode == 13)  // the enter key code
+  {
+    $('#sentiment-text button').trigger('click');
+    return false;  
+  }
+});
+
 
 $("#sentiment-text button").click(function(e){
   var url = $('input[name=url]').val()
   var token = $('input[name=csrfmiddlewaretoken]').val()
   var text = $('input[name=text]').val()
-//  $('input[name=text]').val('')
+  $('input[name=text]').val('')
   $.post(url, {
     'csrfmiddlewaretoken': token,
     'text': text
   }, function(data){
-    sentiment_chart(data['sentiment'])
+//    sentiment_chart(data['sentiment'])
+//    console.log(data)
+    sentiment_chart(Math.round(data[data.length-1]['score']));
+    $('#graph g').remove()
+    create_sentiment_graph(data)
   })
 })
 
@@ -31,7 +49,6 @@ function create_sentiment_chart(score=0){
   var width = $('.container').width() - margin.left - margin.right;
   var height = 150 - margin.top - margin.bottom;
 
-  console.log(width)
   var x = d3.scaleLinear()
     .range([0, width])
     .domain([0, 100]);
@@ -92,21 +109,88 @@ function create_sentiment_chart(score=0){
     text.text(new_score)
       .transition()
       .duration(500)
-      .attr('x', x(new_score));
+      .attr('x', x(new_score))
+      .attr('fill', get_color(new_score))
 
-  }
-
-  function get_color(score){
-    if (score > 100/3*2){
-      return '#50f442';
-    }
-    else if(score > 100/3){
-      return '#07c7f2';
-    }
-    else {
-      return '#f4210e'
-    }
   }
 
 }
+
+function create_sentiment_graph(data){
+  var margin = {top: 50, right: 10, bottom: 40, left: 60};
+  var width = $('.container').width() - margin.left - margin.right;
+  var height = 400 - margin.top - margin.bottom;
+  
+  
+  var y = d3.scaleLinear()
+    .range([height, 0])
+    .domain([0, 100]);
+  
+  var x = d3.scaleBand().rangeRound([0, width]).padding(0.1)
+    .domain(d3.range(data.length));
+  
+  var yAxis = d3.axisLeft(y);
+  
+  var xAxis = d3.axisBottom(x)
+    .tickFormat(function(d){return data[d]['text']});
+  
+  var svg = d3.select("#graph")
+  var g = svg.append('g')
+    .attr('transform', 'translate(' + margin.left + "," + margin.top +")");
+  
+  g.append('g')
+    .attr("class", "axis axis--y")
+    .call(yAxis)
+  
+  g.append('text')
+    .attr("transform", "translate("+ (-margin.left/2) + "," + height/2 +")rotate(-90)")
+    .attr('text-anchor', 'middle')
+    .text("Sentiment");
+  
+  g.append('g')
+    .attr("class", "axis axis--x")
+    .attr("transform", "translate(0," + height + ")")
+    .call(xAxis);
+  
+  g.selectAll(".bar")
+    .data(data)
+    .enter().append("circle")
+    .attr("class", "dot")
+    .attr("cx", function(d, i){ return x(i) + x.bandwidth() /2;})
+    .attr("cy", function(d){ return y(d['score']);})
+    .attr("r", Math.min(5, x.bandwidth()))
+    .attr("fill", function(d){ return get_color(d['score'])});
+  
+  var line = d3.line()
+    .x(function(d, i){return x(i) + x.bandwidth()/2})
+    .y(function(d){return y(d['score'])});
+  
+  g.append("path")
+    .datum(data)
+    .attr('class', 'line')
+    .attr("d", line)
+    .attr('stroke', get_color(data[data.length-1]['score']))
+//  console.log(data)
+  
+}
+
+//function get_color(score){
+//  if (score >= 80){
+//    return '#33cc33';
+//  }
+//  else if (score >= 60) {
+//    return '#1ac6ff';
+//  }
+//  else if (score >= 40){
+//    return '#b3ecff';
+//  }
+//  else if(score >=20){
+//    return '#faa59e';
+//  }
+//  else {
+//    return '#db1c0a';
+//  }
+//}
+
+
 

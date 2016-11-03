@@ -1,0 +1,8 @@
+.line {
+  fill: none;
+  stroke-width: 1.5px;
+}
+
+.axis.axis--x{
+  font-size: 1em;
+}
